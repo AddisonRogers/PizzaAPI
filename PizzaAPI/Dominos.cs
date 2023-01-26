@@ -46,11 +46,22 @@ public class Dominos
         }
         return driver;
     }
-    
+    void Delivery(ChromeDriver driver, string? pizzaname)
+    {
+        string path = "/html/body/div[2]/div/div/div/main/section/section[1]/section[1]/div";
+        var elements = driver.FindElements(By.XPath(path));
+        if (pizzaname == null)
+        {
+            foreach (var item in elements)
+            {
+                if (item.FindElement(By.XPath("/div[1]/div[1]/h3")).Text != pizzaname) continue;
+                Console.WriteLine(item);
+            }
+        }
+        foreach (var item in elements)
+        {
+            Console.WriteLine(item);
+        }
+    }
 }
 
-
-/* 
-Thinking about how this will work I dont really want it to wokr be procedural but at the same time
-
-*/
