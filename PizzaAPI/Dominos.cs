@@ -1,0 +1,56 @@
+﻿using System.Diagnostics;
+
+namespace PizzaAPI;
+
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
+using WebDriverManager;
+using WebDriverManager.DriverConfigs.Impl;
+
+public class Dominos
+{
+    void Main()
+    {
+        
+        
+    }
+    ChromeDriver Setup(string url, string postcode, string delColChoice)
+    {
+        new DriverManager().SetUpDriver(new ChromeConfig());
+        var driver = new ChromeDriver();
+        driver.Navigate().GoToUrl(url);
+        void PostCode()
+        {
+            // This is accepting cookies
+            string verbatim = @"//*[@id=""onetrust-accept-btn-handler""]";
+            driver?.FindElement(By.XPath(verbatim)).Click();
+            
+            // This is inputting the post code
+            driver?.FindElement(By.Name("addressQuery")).SendKeys(postcode);
+            
+            // This is clicking the correct button depending on the parameters
+            string delOrCol;
+            switch (delColChoice)
+            {
+                case "del":
+                    delOrCol = @"//*[@id=""app""]/div/section/div/section[1]/div/div/div[3]/button[1]/div";
+                    break;
+                case "col":
+                    delOrCol = @"//*[@id=""menu-page-container""]/div[9]/section/div[2]/div/section/button[2]/div";
+                    break;
+                default:
+                    return;
+            }
+            driver?.FindElement(By.XPath(delOrCol)).Click();
+        }
+        return driver;
+    }
+    
+}
+
+
+/* 
+Thinking about how this will work I dont really want it to wokr be procedural but at the same time
+
+*/
